@@ -1,0 +1,33 @@
+## Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold
+
+class Solution(object):
+    def numOfSubarrays(self, arr, k, threshold):
+        """
+        :type arr: List[int]
+        :type k: int
+        :type threshold: int
+        :rtype: int
+        """
+         # Initialize variables
+        i = 0 # running index
+        sum = 0 # sum of k elements of arr
+        counter = 0 # output
+        id_l = 0 # lower index for k-array
+        # Compute sum of first k elements of arr
+        while i < k:
+            sum += arr[i]
+            i += 1
+        # Check if sum of first k elements of arr meet conditions
+        if (sum >= k*threshold):
+            counter += 1
+            
+        # Use sliding window approach to update sum for the next k elements of arr
+        while (i >= k and i < len(arr)):
+            sum = sum + arr[i] - arr[id_l]
+            if (sum >= k*threshold):
+                counter += 1
+            # Update upper and lower indexes
+            i += 1
+            id_l += 1
+
+        return counter
